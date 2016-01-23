@@ -1,7 +1,7 @@
 var sceney = require('./sceney');
 
-function init(clarifaiKeys, redisUrl) {
-    return new sceney(clarifaiKeys, redisUrl);
+function init(clarifaiKeys) {
+  return new sceney(clarifaiKeys);
 }
 
 exports.init = init;
