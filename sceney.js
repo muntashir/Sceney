@@ -1,6 +1,6 @@
 var three_net = require('3net.js');
 var fs = require('fs');
-var tags = [
+var inputLayerTags = [
   'travel',
   'tourism',
   'architecture',
@@ -8,17 +8,19 @@ var tags = [
   'waste',
   'garbage',
   'polution',
-  'nature'
+  'nature',
+  '9',
+  '10'
 ];
 
-sceney.prototype.numMap = function (x, in_min, in_max, out_min, out_max) {
-  return Math.min(in_min, (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min);
+function numMap(x, in_min, in_max, out_min, out_max) {
+  return Math.max(in_min, (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min);
 }
 
 sceney.prototype.rateImage = function (imageUrls, callback) {
-  imageTags = {};
+  var result = new Array();
+  var net = this.net;
 
-  this.callback = callback;
   var imageIds = Array.apply(null, Array(imageUrls.length)).map(function (_, i) {
     return 'image' + (i + 1);
   });
@@ -40,27 +42,23 @@ sceney.prototype.rateImage = function (imageUrls, callback) {
     } else {
       if (typeof res["status_code"] === "string" && (res["status_code"] === "OK")) {
         for (var i = 0; i < res.results.length; i++) {
-          var local_id = res.results[i].local_id;
-          if (!imageTags.hasOwnProperty(local_id)) {
-            imageTags[local_id] = {};
-          }
-          var currentImage = imageTags[local_id];
+          var inputVec = Array.apply(null, Array(inputLayerTags.length)).map(Number.prototype.valueOf, 0);
           var tags = res["results"][i].result["tag"]["classes"];
           var probs = res["results"][i].result["tag"]["probs"];
 
           for (var j = 0; j < tags.length; j++) {
-            currentImage[tags[j]] = probs[j];
+            var index = inputLayerTags.indexOf(tags[j]);
+            if (index > -1) {
+              inputVec[index] = numMap(probs[j], 0.9, 1, 0, 100);
+            }
           }
+
+          result.push(net.predict(inputVec));
         }
       }
-      console.log(imageTags);
     }
+    callback(result);
   });
-
-}
-
-sceney.prototype.trainImage = function (imageUrls, labels, callback) {
-  callback(0);
 }
 
 function sceney(clarifaiKeys) {
@@ -69,11 +67,6 @@ function sceney(clarifaiKeys) {
   this.clarifai.setThrottleHandler(function (bThrottled, waitSeconds) {
     console.log(bThrottled ? ["throttled. service available again in", waitSeconds, "seconds"].join(' ') : "not throttled");
   });
-
-  var inputLayer = 10;
-  var hiddenLayer = 25;
-  var outputLayer = 1;
-  var neuron = 'sigmoid';
 
   var saved_net;
   //TODO Load net from file
