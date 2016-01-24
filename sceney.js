@@ -61,21 +61,29 @@ sceney.prototype.rateImage = function (imageUrls, callback) {
   });
 }
 
-function sceney(clarifaiKeys) {
+function sceney(clarifaiKeys, readyCallback) {
+  var that = this;
+
   this.clarifai = require('./clarifai_node');
   this.clarifai.initAPI(clarifaiKeys[0], clarifaiKeys[1]);
   this.clarifai.setThrottleHandler(function (bThrottled, waitSeconds) {
     console.log(bThrottled ? ["throttled. service available again in", waitSeconds, "seconds"].join(' ') : "not throttled");
   });
 
-  var saved_net;
-  //TODO Load net from file
+  fs.readFile("neurons.wt", "utf8", function (err, data) {
+    if (err) {
+      return console.log(err);
+    }
+    var saved_net = data;
 
-  if (saved_net) {
-    this.net = three_net.importNet(JSON.parse(saved_net));
-  } else {
-    console.log('Run train.js first');
-  }
+    if (saved_net) {
+      that.net = three_net.importNet(JSON.parse(saved_net));
+    } else {
+      console.log('Run train.js first');
+    }
+
+    readyCallback();
+  });
 }
 
 module.exports = sceney;

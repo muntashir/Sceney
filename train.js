@@ -85,7 +85,15 @@ clarifai.tagURL(imageUrls, imageIds, function (err, res) {
       }
       var success = net.trainSet(dataset, labels, options);
 
-      if (success) console.log("training complete");
+      if (success) {
+        console.log("training complete");
+        fs.writeFile("neurons.wt", JSON.stringify(net.exportNet()), function (err) {
+          if (err) {
+            return console.log(err);
+          }
+          console.log("net parameters saved");
+        });;
+      }
     }
   }
 });
