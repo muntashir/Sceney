@@ -1,8 +1,8 @@
 var Sceney = require('./index')
 
 var imageUrls = [
-  'https://upload.wikimedia.org/wikipedia/commons/b/be/Notre_Dame_dalla_Senna_crop.jpg',
-  'http://img01.deviantart.net/5f81/i/2008/312/7/8/paris____notre_dame_wp_by_superjuju29.jpg'
+  'https://images.thetrumpet.com/51e9636a!h.300,id.9292,m.fill,w.540',
+  'https://c1.staticflickr.com/1/572/22607522004_1380a87e79_b.jpg'
 ];
 
 var sceney = Sceney.init([process.env.CLARIFAI_CLIENT_ID, process.env.CLARIFAI_CLIENT_SECRET], function () {

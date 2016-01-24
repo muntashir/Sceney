@@ -8,16 +8,29 @@ var clarifai = require('./clarifai_node');
 var clarifaiKeys = [process.env.CLARIFAI_CLIENT_ID, process.env.CLARIFAI_CLIENT_SECRET];
 
 var inputLayerTags = [
+  'street',
   'travel',
-  'tourism',
-  'architecture',
+  'town',
+  'road',
+  'city',
   'no person',
-  'waste',
+  'business',
+  'shopping',
+  'skyscraper',
+  'traffic',
+  'car',
+  'downtown',
+  'office',
+  'modern',
+  'cityscape',
+  'graffiti',
   'garbage',
-  'polution',
-  'nature',
+  'residential',
+  'waste',
+  'architecture',
   'calamity',
-  'street'
+  'waste',
+  'pollution'
 ];
 
 var imageUrls = [
@@ -83,7 +96,7 @@ var labels = [
 ];
 
 var inputLayer = inputLayerTags.length;
-var hiddenLayer = 50;
+var hiddenLayer = 40;
 var outputLayer = 1;
 var neuron = 'sigmoid';
 
@@ -169,7 +182,7 @@ function trainBatch(batchUrls, batchLabels, callback) {
 
           dataset.push(inputVec);
         }
-        
+
         var success = net.trainSet(dataset, batchLabels, options);
 
         if (success) {

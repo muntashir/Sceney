@@ -2,16 +2,29 @@ var three_net = require('3net.js');
 var fs = require('fs');
 
 var inputLayerTags = [
+  'street',
   'travel',
-  'tourism',
-  'architecture',
+  'town',
+  'road',
+  'city',
   'no person',
-  'waste',
+  'business',
+  'shopping',
+  'skyscraper',
+  'traffic',
+  'car',
+  'downtown',
+  'office',
+  'modern',
+  'cityscape',
+  'graffiti',
   'garbage',
-  'polution',
-  'nature',
-  '9',
-  '10'
+  'residential',
+  'waste',
+  'architecture',
+  'calamity',
+  'waste',
+  'pollution'
 ];
 
 function numMap(x, in_min, in_max, out_min, out_max) {
