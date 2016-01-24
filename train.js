@@ -2,10 +2,7 @@ var three_net = require('3net.js');
 var fs = require('fs');
 var clarifai = require('./clarifai_node');
 
-var clarifaiKeys = [
-  '',
-  ''
-];
+var clarifaiKeys = [process.env.CLARIFAI_CLIENT_ID, process.env.CLARIFAI_CLIENT_SECRET];
 
 var inputLayerTags = [
   'travel',
