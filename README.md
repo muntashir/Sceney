@@ -1,6 +1,6 @@
 # Sceney
 
-[![NPM](https://nodei.co/npm/3net.js.png)](https://npmjs.org/package/3net.js)
+[![NPM](https://nodei.co/npm/sceney.png)](https://npmjs.org/package/sceney)
 
 Created for ConU Hacks 2016. Used in https://github.com/Jefftree/scenify
 
