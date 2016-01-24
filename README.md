@@ -8,7 +8,7 @@ Rates how scenic an image is. See test.js for an example on how to use it. Requi
 
 Uses Clarifai to generate tags for the image, then uses 3net.js on the tags to rate images.
 
-#### Initialization
+#### Example
     var Sceney = require('sceney')
   
     var imageUrls = [
