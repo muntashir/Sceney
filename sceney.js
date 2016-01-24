@@ -1,5 +1,6 @@
 var three_net = require('3net.js');
 var fs = require('fs');
+var path = require('path');
 
 var inputLayerTags = [
   'street',
@@ -84,7 +85,7 @@ function sceney(clarifaiKeys, readyCallback) {
     console.log(bThrottled ? ["throttled. service available again in", waitSeconds, "seconds"].join(' ') : "not throttled");
   });
 
-  fs.readFile("neurons.wt", "utf8", function (err, data) {
+  fs.readFile(path.resolve(__dirname, 'neurons.wt'), "utf8", function (err, data) {
     if (err) {
       return console.log(err);
     }
